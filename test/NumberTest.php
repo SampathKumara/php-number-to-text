@@ -9,7 +9,7 @@
 
  use PHPUnit\Framework\TestCase;
 
- use SriAnt\Utils\NumberModel;
+ use SriAnt\Utils\NumberGeneralizeModel;
 
  final class NumberTest extends TestCase
  {
@@ -17,7 +17,7 @@
 
      protected function setUp(): void
      {
-         $this->number_model = new NumberModel();
+         $this->number_model = new NumberGeneralizeModel();
      }
 
      protected function tearDown(): void
@@ -27,7 +27,7 @@
 
      public function testNumber(): void
      {
-         $this->assertInstanceOf(NumberModel::class, $this->number_model);
+         $this->assertInstanceOf(NumberGeneralizeModel::class, $this->number_model);
      }
 
      public function testIsNotEmptyForNull(): void
