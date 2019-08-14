@@ -1,0 +1,15 @@
+{
+  "name": "sampath/numbertotext",
+  "type": "library",
+  "authors": [{
+    "name": "Sampath",
+    "email": "sampath.skyalliances@gmail.com"
+  }],
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^8"
+  },
+  "autoload": {
+    "classmap": ["src/model"]
+  }
+}
