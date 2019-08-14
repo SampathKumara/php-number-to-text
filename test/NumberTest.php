@@ -9,27 +9,81 @@
 
  use PHPUnit\Framework\TestCase;
 
-
  use SriAnt\Utils\NumberModel;
 
  final class NumberTest extends TestCase
  {
+     private $number_model;
+
+     protected function setUp(): void
+     {
+         $this->number_model = new NumberModel();
+     }
+
+     protected function tearDown(): void
+     {
+         $this->number_model = null;
+     }
 
      public function testNumber(): void
      {
-       $number_model = new NumberModel();
-       $this->assertInstanceOf(NumberModel::class, $number_model);
+         $this->assertInstanceOf(NumberModel::class, $this->number_model);
      }
 
-     public function testVeriry(){
-       $number_model = new NumberModel();
-       $this->assertFalse($number_model->validateNumber(null));
-       $this->assertFalse($number_model->validateNumber(""));
-       $this->assertTrue($number_model->validateNumber(1));
-       $this->assertTrue($number_model->validateNumber(1.2));
-       $this->assertTrue($number_model->validateNumber(100.22));
-       $this->assertTrue($number_model->validateNumber(9999999.999999));
+     public function testIsNotEmptyForNull(): void
+     {
+         $this->expectException(InvalidArgumentException::class);
+         $this->number_model->isNotEmpty(null);
      }
 
+     public function testIsNotEmptyForEmpty(): void
+     {
+         $this->expectException(InvalidArgumentException::class);
+         $this->number_model->isNotEmpty("  ");
+     }
 
+     public function testIsNotEmpty(): void
+     {
+         $this->assertTrue($this->number_model->isNotEmpty(1));
+         $this->assertTrue($this->number_model->isNotEmpty("1"));
+         $this->assertTrue($this->number_model->isNotEmpty(" 1"));
+         $this->assertTrue($this->number_model->isNotEmpty("1. 0"));
+     }
+
+     public function testClearNumber(): void
+     {
+         $this->assertEquals("1", $this->number_model->clearNumber(1));
+         $this->assertEquals("1", $this->number_model->clearNumber("1"));
+         $this->assertEquals("1", $this->number_model->clearNumber(" 1"));
+         $this->assertEquals("1.0", $this->number_model->clearNumber("1. 0"));
+     }
+
+     public function testIsValidPatten(): void
+     {
+         $this->assertTrue($this->number_model->isValidPattern(1));
+         $this->assertTrue($this->number_model->isValidPattern("1"));
+         $this->assertTrue($this->number_model->isValidPattern("1"));
+         $this->assertTrue($this->number_model->isValidPattern("1.0"));
+         $this->assertTrue($this->number_model->isValidPattern("10000.0"));
+         $this->assertTrue($this->number_model->isValidPattern("1.0"));
+     }
+
+     // public function testVeriry(){
+     //   $number_model = new NumberModel();
+     //   $this->assertFalse($number_model->validateNumber(null));
+     //   $this->assertTrue($number_model->validateNumber(1));
+     //   $this->assertTrue($number_model->validateNumber(1.2));
+     //   $this->assertFalse($number_model->validateNumber(-100.22));
+     //   $this->assertTrue($number_model->validateNumber("100.55"));
+     //   $this->assertTrue($number_model->validateNumber(9999999.999999));
+     //   $this->assertFalse($number_model->validateNumber("-3"));
+     //   $this->assertFalse($number_model->validateNumber("a"));
+     //   $this->assertFalse($number_model->validateNumber("-_"));
+     //   $this->assertTrue($number_model->validateNumber(".22"));
+     //   $this->assertFalse($number_model->validateNumber(".2rx3"));
+     // }
+
+     // public function testNumberFormat(){
+     //   $this->assertFalse($this->number_model->validateNumber(1));
+     // }
  }
