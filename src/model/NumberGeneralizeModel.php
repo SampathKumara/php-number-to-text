@@ -18,7 +18,7 @@ class NumberGeneralizeModel
                 return true;
             }
         }
-        throw new \InvalidArgumentException("Number Cannot be null");
+        return false;
     }
 
     public function clearNumber($number)
@@ -52,9 +52,15 @@ class NumberGeneralizeModel
             if ($this->isValidPattern($number)) {
                 $number = $this->convertToFloat($number);
                 if ($number >= 0) {
+                    return $this->formatNumber($number);
+                } else {
+                    throw new \InvalidArgumentException("Not a positive Number");
                 }
+            } else {
+                throw new \InvalidArgumentException("Invalid Number");
             }
+        } else {
+            throw new \InvalidArgumentException("Number not found");
         }
-        return false;
     }
 }

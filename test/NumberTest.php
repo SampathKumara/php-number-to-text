@@ -30,20 +30,10 @@
          $this->assertInstanceOf(NumberGeneralizeModel::class, $this->number_model);
      }
 
-     public function testIsNotEmptyForNull(): void
-     {
-         $this->expectException(InvalidArgumentException::class);
-         $this->number_model->isNotEmpty(null);
-     }
-
-     public function testIsNotEmptyForEmpty(): void
-     {
-         $this->expectException(InvalidArgumentException::class);
-         $this->number_model->isNotEmpty("  ");
-     }
-
      public function testIsNotEmpty(): void
      {
+         $this->assertFalse($this->number_model->isNotEmpty(null));
+         $this->assertFalse($this->number_model->isNotEmpty("  "));
          $this->assertTrue($this->number_model->isNotEmpty(1));
          $this->assertTrue($this->number_model->isNotEmpty("1"));
          $this->assertTrue($this->number_model->isNotEmpty(" 1"));
@@ -88,22 +78,26 @@
          $this->assertEquals("1.01", $this->number_model->formatNumber("1.01"));
      }
 
-     // public function testVeriry(){
-     //   $number_model = new NumberModel();
-     //   $this->assertFalse($number_model->validateNumber(null));
-     //   $this->assertTrue($number_model->validateNumber(1));
-     //   $this->assertTrue($number_model->validateNumber(1.2));
-     //   $this->assertFalse($number_model->validateNumber(-100.22));
-     //   $this->assertTrue($number_model->validateNumber("100.55"));
-     //   $this->assertTrue($number_model->validateNumber(9999999.999999));
-     //   $this->assertFalse($number_model->validateNumber("-3"));
-     //   $this->assertFalse($number_model->validateNumber("a"));
-     //   $this->assertFalse($number_model->validateNumber("-_"));
-     //   $this->assertTrue($number_model->validateNumber(".22"));
-     //   $this->assertFalse($number_model->validateNumber(".2rx3"));
-     // }
-
-     // public function testNumberFormat(){
-     //   $this->assertFalse($this->number_model->validateNumber(1));
-     // }
+     public function testGeneralizeNumber()
+     {
+         $this->assertEquals("0.00", $this->number_model->generalizeNumber("0"));
+         $this->assertEquals("1.00", $this->number_model->generalizeNumber("1"));
+         $this->assertEquals("100,000.00", $this->number_model->generalizeNumber("100000"));
+         $this->assertEquals("1.00", $this->number_model->generalizeNumber("1.0"));
+         $this->assertEquals("10,000.00", $this->number_model->generalizeNumber("10000.0"));
+         $this->assertEquals("1.01", $this->number_model->generalizeNumber("1.01"));
+         // $this->expectException(InvalidArgumentException::class);
+         // $this->number_model->generalizeNumber(null);
+         // $this->expectException(InvalidArgumentException::class);
+         // $this->number_model->generalizeNumber("");
+         $this->assertEquals("1.00", $this->number_model->generalizeNumber(1));
+         $this->assertEquals("1.20", $this->number_model->generalizeNumber(1.2));
+         // $this->expectException(InvalidArgumentException::class);
+         // $this->number_model->generalizeNumber(-100);
+         $this->assertEquals("1,000.22", $this->number_model->generalizeNumber(1000.22));
+         $this->assertEquals("100,000.02", $this->number_model->generalizeNumber(100000.02));
+         $this->assertEquals("100,080,000.00", $this->number_model->generalizeNumber("100080,000"));
+         $this->assertEquals("9,999,999.90", $this->number_model->generalizeNumber("9999999.9"));
+         $this->assertEquals("9,999,999.99", $this->number_model->generalizeNumber(9999999.99));
+     }
  }
