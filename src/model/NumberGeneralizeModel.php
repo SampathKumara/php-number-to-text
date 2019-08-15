@@ -35,20 +35,6 @@ class NumberGeneralizeModel
         return false;
     }
 
-    // public function validateNumber($number)
-    // {
-    //     if ($number != null) {
-    //         $number = trim($number);
-    //         if (strlen($number) > 0) {
-    //             $number = floatval($number);
-    //             if ($number > 0) {
-    //                 return is_numeric($number);
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
     public function convertToFloat($number)
     {
         return floatval($number);
@@ -56,6 +42,19 @@ class NumberGeneralizeModel
 
     public function formatNumber($number)
     {
-        return number_format($number);
+        return number_format($number, 2, ".", ",");
+    }
+
+    public function generalizeNumber($number)
+    {
+        if ($this->isNotEmpty($number)) {
+            $number = $this->clearNumber($number);
+            if ($this->isValidPattern($number)) {
+                $number = $this->convertToFloat($number);
+                if ($number >= 0) {
+                }
+            }
+        }
+        return false;
     }
 }
