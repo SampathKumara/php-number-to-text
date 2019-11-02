@@ -60,7 +60,7 @@
      public function testGetLangData()
      {
        $res = $this->ntt->getLangData(null);
-        $this->assertEquals(null , $res);
+        $this->assertEquals(0 , count($res));
         $this->assertEquals(4, count($this->ntt->getLangData(SINHALA)));
      }
  }

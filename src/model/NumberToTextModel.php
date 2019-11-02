@@ -29,19 +29,13 @@ class NumberToTextModel
 
     public function getLangData($language)
     {
-      if($language != null){
-        switch ($language) {
-          case SINHALA:
-            return $this->si_array;
-            break;
-          case ENGLISH:
-            return $this->en_array;
-            break;
-          default:
-            return null;
+        $res = array();
+        if ($language == SINHALA) {
+            $res = $this->si_array;
+        } elseif ($language == ENGLISH) {
+            $res = $this->en_array;
         }
-      }
-      return null;
+        return $res;
     }
 
     public function translate($number_parts)

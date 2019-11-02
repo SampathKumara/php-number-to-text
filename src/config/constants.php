@@ -1,5 +1,5 @@
 <?php
 
-define('SINHALA', 0);
-define('TAMIL', 1);
-define('ENGLISH', 2);
+define('SINHALA', 1);
+define('TAMIL', 2);
+define('ENGLISH', 3);
