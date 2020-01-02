@@ -11,10 +11,16 @@ namespace SriAnt\Utils;
 class NumberToTextModel
 {
     private $numberGenModel;
+    private $language;
 
     public function __construct()
     {
         $this->numberGenModel = new NumberGeneralizeModel();
+        $this->language = ENGLISH;
+    }
+
+    public function setLanguage($labguage){
+      $this->language = $labguage;
     }
 
     public function breakdownNumber($number)
@@ -38,8 +44,18 @@ class NumberToTextModel
         return $res;
     }
 
-    public function translate($number_parts)
+    public function translateUptoTen($number)
     {
+      if($number <= 10 && $number >= -10){
+        $number = abs($number);
+        $lang_array = $this->getLangData($this->language);
+        return $lang_array[0][$number];
+      }else{
+        throw new \InvalidArgumentException("Number is out of range");
+      }
+
+      return "";
+
     }
 
     private $en_array = array(

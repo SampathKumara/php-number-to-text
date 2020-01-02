@@ -63,4 +63,13 @@
         $this->assertEquals(0 , count($res));
         $this->assertEquals(4, count($this->ntt->getLangData(SINHALA)));
      }
+
+     public function testTranslateUptoTen()
+     {
+       // $this->expectException(InvalidArgumentException::class);
+       // $this->ntt->setLanguage(ENGLISH);
+       $res = $this->ntt->translateUptoTen(0);
+        $this->assertEquals("zero" , $res);
+     }
+
  }
