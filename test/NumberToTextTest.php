@@ -68,8 +68,18 @@
      {
        // $this->expectException(InvalidArgumentException::class);
        // $this->ntt->setLanguage(ENGLISH);
-       $res = $this->ntt->translateUptoTen(0);
-        $this->assertEquals("zero" , $res);
+        $this->assertEquals("zero" , $this->ntt->translateUptoTwenty(0));
+        $this->assertEquals("one" , $this->ntt->translateUptoTwenty(1));
+        $this->assertEquals("nine" , $this->ntt->translateUptoTwenty(9));
+        $this->assertEquals("fifteen" , $this->ntt->translateUptoTwenty(15));
+     }
+
+     public function testTranslateUptoHundred()
+     {
+        $this->assertEquals("zero" , $this->ntt->translateUptoHundred(0));
+        $this->assertEquals("ten" , $this->ntt->translateUptoHundred(10));
+        $this->assertEquals("eleven" , $this->ntt->translateUptoHundred(11));
+        $this->assertEquals("twenty one" , $this->ntt->translateUptoHundred(21));
      }
 
  }

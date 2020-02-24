@@ -44,19 +44,34 @@ class NumberToTextModel
         return $res;
     }
 
-    public function translateUptoTen($number)
+    public function translateUptoTwenty($number)
     {
-      if($number <= 10 && $number >= -10){
+      if($number >= 0 && $number <= 20){
         $number = abs($number);
         $lang_array = $this->getLangData($this->language);
         return $lang_array[0][$number];
       }else{
         throw new \InvalidArgumentException("Number is out of range");
       }
-
-      return "";
-
     }
+
+    public function translateUptoHundred($number)
+    {
+      if($number >= 0 && $number <= 100){
+        $number = abs($number);
+        $lastDigit = $number % 10;
+        $divisor = $this->numberGenModel->getDivisor($number, 10);
+        $lang_array = $this->getLangData($this->language);
+        if($number > 20){
+          return $lang_array[0][$divisor*10] . ' ' . $this->translateUptoTwenty($lastDigit);
+        }else{
+          return $this->translateUptoTwenty($number);
+        }
+      }else{
+        throw new \InvalidArgumentException("Number is out of range");
+      }
+    }
+
 
     private $en_array = array(
                             array(

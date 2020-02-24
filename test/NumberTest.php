@@ -100,4 +100,13 @@
          $this->assertEquals("9,999,999.90", $this->number_model->generalizeNumber("9999999.9"));
          $this->assertEquals("9,999,999.99", $this->number_model->generalizeNumber(9999999.99));
      }
+
+     public function testGetDivisor(): void
+     {
+       $this->assertEquals(6, $this->number_model->getDivisor(60, 10));
+       $this->assertEquals(6, $this->number_model->getDivisor(65, 10));
+       $this->assertEquals(0, $this->number_model->getDivisor(0, 10));
+
+     }
+
  }

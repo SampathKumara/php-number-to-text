@@ -63,4 +63,19 @@ class NumberGeneralizeModel
             throw new \InvalidArgumentException("Number not found");
         }
     }
+
+    public function getDivisor($number, $modby)
+    {
+        if ($this->isNotEmpty($number)) {
+          if ($this->isNotEmpty($modby)) {
+            $remainder = $number % $modby;
+            $number -= $remainder;
+            return $number / $modby;
+          } else {
+              throw new \InvalidArgumentException("Invalid Mod value");
+          }
+        } else {
+            throw new \InvalidArgumentException("Invalid Number");
+        }
+    }
 }
